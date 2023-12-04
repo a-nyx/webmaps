@@ -22,7 +22,10 @@ const BasemapWrapper = () => {
   const [styleChoice, setStyleChoice] = useState<STYLE>('light');
   return (
     <section>
-      <h2>Basemap</h2>
+      <h2>
+        Basemap (<code>@/src/components/Basemap</code>)
+      </h2>
+
       <Select styleChoice={styleChoice} setStyleChoice={setStyleChoice} />
       <BaseMap styleUrl={STYLESPATH + STYLES[styleChoice]} />
     </section>

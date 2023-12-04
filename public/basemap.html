@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basemap with vanilla JS</title>
+
+    <!-- Import Maplibre GL -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css"
+    />
+    <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+
+    <!-- Import Pmtiles -->
+    <script src="https://unpkg.com/pmtiles@2.5.0/dist/index.js"></script>
+  </head>
+  <body>
+    <section>
+      <h2>Basemap with vanilla JS</h2>
+      <a href="/" style="margin: 1rem 0">Go Home</a>
+
+      <!-- SELECT -->
+      <div style="margin: 1rem 0">
+        <label for="styles">Choose a style:</label>
+        <select
+          name="styles"
+          id="styles"
+          style="margin: 0 1rem 0 0.5rem"
+          onclick="changeStyle()"
+        ></select>
+        <a id="styleLink" href="/styles/light.json" target="_blank">
+          See style json
+        </a>
+      </div>
+
+      <!-- MAP -->
+      <div id="mapContainer" style="width: 100%; height: 400px"></div>
+    </section>
+
+    <!-- SCRIPTS -->
+    <script type="text/javascript">
+      const STYLESPATH = '/styles/';
+      const STYLES = {
+        black: 'black.json',
+        contrast: 'contrast.json',
+        dark: 'dark.json',
+        grayscale: 'grayscale.json',
+        light: 'light.json',
+        white: 'white.json',
+      };
+
+      // ADD PMTILES PROTOCOL
+      let protocol = new pmtiles.Protocol();
+      maplibregl.addProtocol('pmtiles', protocol.tile);
+
+      // SETUP SELECT
+      let styleChoice = 'light';
+      const selectEl = document.getElementById('styles');
+      Object.keys(STYLES).forEach((key) => {
+        const optionEl = document.createElement('option');
+        optionEl.value = key;
+        optionEl.innerText = key;
+        selectEl.appendChild(optionEl);
+      });
+      selectEl.value = styleChoice;
+
+      const changeStyle = () => {
+        styleChoice = selectEl.value;
+
+        // update link
+        const styleLinkEl = document.getElementById('styleLink');
+        styleLinkEl.href = STYLESPATH + STYLES[styleChoice];
+
+        // renew map
+        document.getElementById('mapContainer').innerHTML = '';
+        const map = new maplibregl.Map({
+          container: 'mapContainer',
+          style: STYLESPATH + STYLES[styleChoice],
+          center: [-63.1872, 46.4974],
+          zoom: 7.25,
+          minZoom: 7.25,
+          maxZoom: 12,
+          maxBounds: [-64.60505, 45.91017, -61.15594, 47.89282],
+        });
+      };
+
+      // INIT MAP
+      changeStyle();
+    </script>
+  </body>
+</html>
