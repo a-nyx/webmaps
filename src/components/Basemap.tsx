@@ -22,9 +22,11 @@ const BasemapWrapper = () => {
   const [styleChoice, setStyleChoice] = useState<STYLE>('light');
   return (
     <section>
-      <h2>
-        Basemap (<code>@/src/components/Basemap</code>)
-      </h2>
+      <h2>Basemap</h2>
+      <p>
+        Path:
+        <i>@/src/components/Basemap.tsx</i> || <i>@/public/basemap.html</i>
+      </p>
 
       <Select styleChoice={styleChoice} setStyleChoice={setStyleChoice} />
       <BaseMap styleUrl={STYLESPATH + STYLES[styleChoice]} />
@@ -73,7 +75,12 @@ const BaseMap = ({ styleUrl }: { styleUrl: string }) => {
     return () => maplibregl.removeProtocol('pmtiles');
   }, []);
 
-  if (!styles) return <p>Loading...</p>;
+  if (!styles)
+    return (
+      <p style={{ width: '100%', height: 400, border: '1px solid black' }}>
+        Loading...
+      </p>
+    );
 
   return (
     <Map

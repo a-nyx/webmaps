@@ -9,9 +9,11 @@ import Map, { Layer, NavigationControl, Source } from 'react-map-gl/maplibre';
 const BasemapWrapper = () => {
   return (
     <section>
-      <h2>
-        Electoral Canada (<code>@/src/components/Electoral</code>)
-      </h2>
+      <h2>Electoral</h2>
+      <p>
+        Path:
+        <i>@/src/components/Electoral.tsx</i> || <i>@/public/electoral.html</i>
+      </p>
 
       <Electoral />
     </section>

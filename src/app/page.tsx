@@ -5,6 +5,12 @@ const Home = () => {
   return (
     <main>
       <h1>Web Maps: Open source & Serverless</h1>
+      <p>
+        GitHub Repo:{' '}
+        <a href="https://github.com/a-nyx/webmaps" target="_blank">
+          https://github.com/a-nyx/webmaps
+        </a>
+      </p>
       <Basemap />
       <Electoral />
     </main>
