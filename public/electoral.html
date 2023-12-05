@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electoral Map with vanilla JS</title>
+
+    <!-- Import Maplibre GL -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css"
+    />
+    <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+
+    <!-- Import Pmtiles -->
+    <script src="https://unpkg.com/pmtiles@2.5.0/dist/index.js"></script>
+  </head>
+  <body>
+    <section>
+      <h2>Electoral Canada with vanilla JS</h2>
+      <a href="/" style="margin: 1rem 0">Go Home</a>
+
+      <!-- MAP -->
+      <div
+        id="mapContainer"
+        style="width: 100%; height: 600px; border: 1px solid black"
+      ></div>
+    </section>
+
+    <!-- SCRIPTS -->
+    <script type="text/javascript">
+      // ADD PMTILES PROTOCOL
+      let protocol = new pmtiles.Protocol();
+      maplibregl.addProtocol('pmtiles', protocol.tile);
+
+      const map = new maplibregl.Map({
+        container: 'mapContainer',
+        style: { version: 8, sources: {}, layers: [] },
+        center: [-94.35, 63],
+        zoom: 2.5,
+        renderWorldCopies: false,
+      });
+
+      map.on('load', () => {
+        map.addSource('electoralCanada', {
+          id: 'electoralCanada',
+          type: 'vector',
+          url: 'pmtiles://data/pmtiles/electoralCanada.pmtiles',
+        });
+
+        map.addLayer({
+          id: 'districts',
+          type: 'fill',
+          source: 'electoralCanada',
+          'source-layer': 'geojson',
+          paint: {
+            'fill-color': 'lightgray',
+            'fill-outline-color': 'black',
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
