@@ -85,7 +85,7 @@ const BaseMap = ({ styleUrl }: { styleUrl: string }) => {
       minZoom={7.25}
       maxZoom={12}
       maxBounds={[-64.60505, 45.91017, -61.15594, 47.89282]}
-      style={{ width: '100%', height: 400 }}
+      style={{ width: '100%', height: 400, border: '1px solid black' }}
       mapStyle={styles}
       // onMove={(e) => console.log({ e })}
       attributionControl={false}
